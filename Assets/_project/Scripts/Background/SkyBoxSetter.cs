@@ -21,7 +21,7 @@ public class SkyBoxSetter : MonoBehaviour
 
     void ChangeSkybox(int skybox)
     {
-        if (_skybox != null && skybox >= 0 && skybox <= _skyboxMaterials.Count)
+        if (_skybox != null && skybox >= 0 && skybox < _skyboxMaterials.Count)
         {
             _skybox.material = _skyboxMaterials[skybox];
         }
