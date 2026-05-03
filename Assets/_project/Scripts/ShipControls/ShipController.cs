@@ -1,86 +1,47 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody))]
-public class ShipControls : MonoBehaviour
+public class ShipController : MonoBehaviour
 {
-    [Header("Movement Settings")][SerializeField] ShipMovementInput _movementInput;
-    [Header("Cockpit Controls")][SerializeField] private AnimationCockpitControls _animationCockpitControls;
+    [SerializeField] MovementControlsBase _movementControls;
+    [SerializeField] WeaponControlsBase _weaponControls;
+    [SerializeField] ShipDataSo _shipData;
+    [SerializeField] List<ShipEngine> _engines;
+    [SerializeField] List<Blaster> _blasters;
+    [SerializeField] private AnimationCockpitControls _cockpitAnimationControls;
+    Rigidbody _rigidBody;
 
-    [SerializeField][Range(1000f, 10000f)] private float _thrustForce = 7500f, _pitchForce = 6000f, _rollForce = 1000f, _yawForce = 2000f;
+    float _thrustAmount, _pitchAmount, _rollAmount, _yawAmount = 0f;
 
-    [Header("Inspector Input")][SerializeField][Range(-1f, 1f)] private float _thrustAmount = 0f;
+    IMovementControls MovementInput => _movementControls;
+    IWeaponControls WeaponInput => _weaponControls;
 
-    [SerializeField][Range(-1f, 1f)] private float _pitchAmount, _rollAmount, _yawAmount = 0f;
-    private Rigidbody _rigidbody;
-
-    IMovementControls ControlInput => _movementInput._movementControls;
-
-    [SerializeField] private bool _invertPitch = true;
-
-    [SerializeField] private bool _invertRoll = false;
-
-
-
-    private void Awake()
+    void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _rigidBody = GetComponent<Rigidbody>();
     }
-
     void Start()
     {
-            _animationCockpitControls.Init(ControlInput);
+        foreach (ShipEngine engine in _engines) engine.Init(MovementInput, _rigidBody, _shipData.ThrustForce / _engines.Count);
+        foreach (Blaster blaster in _blasters) blaster.Init(WeaponInput, _shipData.BlasterCooldown, _shipData.BlasterLaunchForce, _shipData.BlasterProjectileDuration, _shipData.BlasterDamage);
+        if (_cockpitAnimationControls != null) _cockpitAnimationControls.Init(MovementInput);
     }
 
-    private void Update()
+    void Update()
     {
-        if (ControlInput == null)
-        {
-            _thrustAmount = 0f;
-            _pitchAmount = 0f;
-            _rollAmount = 0f;
-            _yawAmount = 0f;
-            return;
-        }
-
-        _thrustAmount = ControlInput.ThrustAmount;
-        _pitchAmount = ControlInput.PitchAmount;
-        _rollAmount = ControlInput.RollAmount;
-        _yawAmount = ControlInput.YawAmount;
-
-        if (_invertPitch)
-        {
-            _pitchAmount = -_pitchAmount;
-        }
-
-        if (_invertRoll)
-        {
-            _rollAmount = -_rollAmount;
-        }
+        _thrustAmount = MovementInput.ThrustAmount;
+        _rollAmount = MovementInput.RollAmount;
+        _yawAmount = MovementInput.YawAmount;
+        _pitchAmount = MovementInput.PitchAmount;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-
-        if (!Mathf.Approximately(0f, _pitchAmount))
-        {
-            _rigidbody.AddTorque(transform.right * _pitchAmount * _pitchForce * Time.fixedDeltaTime, ForceMode.Force);
-        }
-
-        if (!Mathf.Approximately(0f, _rollAmount))
-        {
-            _rigidbody.AddTorque(transform.forward * _rollAmount * _rollForce * Time.fixedDeltaTime, ForceMode.Force);
-        }
-
-        if (!Mathf.Approximately(0f, _yawAmount))
-        {
-            _rigidbody.AddTorque(transform.up * _yawAmount * _yawForce * Time.fixedDeltaTime, ForceMode.Force);
-        }
-
-        if (!Mathf.Approximately(0f, _thrustAmount))
-        {
-            _rigidbody.AddForce(transform.forward * _thrustAmount * _thrustForce * Time.fixedDeltaTime, ForceMode.Force);
-        }
+        if (!Mathf.Approximately(0f, _thrustAmount)) _rigidBody.AddRelativeForce(Vector3.forward * (_thrustAmount * _shipData.ThrustForce * Time.fixedDeltaTime));
+        if (!Mathf.Approximately(0f, _pitchAmount)) _rigidBody.AddTorque(transform.right * (_shipData.PitchForce * _pitchAmount * Time.fixedDeltaTime));
+        if (!Mathf.Approximately(0f, _rollAmount)) _rigidBody.AddTorque(transform.forward * (_shipData.RollForce * _rollAmount * Time.fixedDeltaTime));
+        if (!Mathf.Approximately(0f, _yawAmount)) _rigidBody.AddTorque(transform.up * (_yawAmount * _shipData.YawForce * Time.fixedDeltaTime));
     }
 }
