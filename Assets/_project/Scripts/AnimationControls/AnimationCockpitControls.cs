@@ -3,27 +3,28 @@ using UnityEngine;
 
 public class AnimationCockpitControls : MonoBehaviour
 {
-    [SerializeField] private Transform _joystick;
+    [SerializeField] Transform _joystick;
 
-    [SerializeField] private Vector3 _joystickRange = Vector3.zero;
+    [SerializeField] Vector3 _joystickRange = Vector3.zero;
 
-    [SerializeField] private List<Transform> _throttles;
+    [SerializeField] List<Transform> _throttles;
 
-    [SerializeField] private float _throttleRange = 35f;
-    IMovementControls _movementControls;
+    [SerializeField] float _throttleRange = 35f;
 
-    private void Awake()
+    private IMovementControls _movementInput;
+
+    // Update is called once per frame
+    void Update()
     {
-
-    }
-
-    private void Update()
-    {
-            if (_movementControls == null) return;
-        _joystick.localRotation = Quaternion.Euler(_movementControls.PitchAmount * _joystickRange.x, _movementControls.YawAmount * _joystickRange.y, -_movementControls.RollAmount * _joystickRange.z);
+        if (_movementInput == null) return;
+        _joystick.localRotation = Quaternion.Euler(
+            -_movementInput.PitchAmount * _joystickRange.x,
+            _movementInput.YawAmount * _joystickRange.y,
+            _movementInput.RollAmount * _joystickRange.z
+        );
 
         Vector3 throttleRotation = _throttles[0].localRotation.eulerAngles;
-        throttleRotation.x = _movementControls.ThrustAmount * _throttleRange;
+        throttleRotation.x = _movementInput.ThrustAmount * _throttleRange;
         foreach (Transform throttle in _throttles)
         {
             throttle.localRotation = Quaternion.Euler(throttleRotation);
@@ -32,7 +33,6 @@ public class AnimationCockpitControls : MonoBehaviour
 
     public void Init(IMovementControls movementControls)
     {
-        _movementControls = movementControls;
+        _movementInput = movementControls;
     }
-
 }

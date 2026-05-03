@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3288051663176667880}
   - component: {fileID: 267933887054431253}
   - component: {fileID: 8169006735821822190}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerProjectiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,9 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a46b7ffc1b62940aa4dde168cc3e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::NewMonoBehaviourScript
-  _launchForce: 10000
-  _damage: 100
-  _range: 2
   _hitEffect: {fileID: 6020238336481233079, guid: c6127890d22181b4f9c267f64079a60e, type: 3}
 --- !u!1 &7487997178828521962
 GameObject:
@@ -223,7 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3346374757137176168}
   - component: {fileID: 3352970056395639914}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +318,7 @@ GameObject:
   - component: {fileID: 2565373737468174107}
   - component: {fileID: 2957813564884469008}
   - component: {fileID: 7881874958017876467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +448,10 @@ PrefabInstance:
     - target: {fileID: 6543582949551445921, guid: 54d72d1ecc977bb45a7839ce77b38fc7, type: 3}
       propertyPath: m_Name
       value: Capsule
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543582949551445921, guid: 54d72d1ecc977bb45a7839ce77b38fc7, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6772331723765075384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 932114452938407110}
+  m_Layer: 0
+  m_Name: CollisionAvoidance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &932114452938407110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772331723765075384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1896576678754966121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7896742190468968667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1896576678754966121}
+  - component: {fileID: 98537843545002941}
+  m_Layer: 0
+  m_Name: AIShipMovementControls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1896576678754966121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896742190468968667}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 38.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 932114452938407110}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98537843545002941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896742190468968667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c4d8b2acc3ff04592ff8f0ea03e0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::AIShipMovementControls
+  _target: {fileID: 0}
+  _enableYaw: 1
+  _yawPidController:
+    _proportionalGain: 0.5
+    _integralGain: 0
+    _derivativeGain: 0.1
+    _minOutput: -1
+    _maxOutput: 1
+    _integralSaturation: 0
+    _derivativeMeasurement: 0
+    _enablePid: 1
+    _lastValue: 0
+    _lastError: 0
+    _integrationStored: 0
+    _velocity: 0
+  _enablePitch: 1
+  _pitchPidController:
+    _proportionalGain: 0.5
+    _integralGain: 0
+    _derivativeGain: 0.1
+    _minOutput: -1
+    _maxOutput: 1
+    _integralSaturation: 0
+    _derivativeMeasurement: 0
+    _enablePid: 1
+    _lastValue: 0
+    _lastError: 0
+    _integrationStored: 0
+    _velocity: 0
+  _localDirection: {x: 0, y: 0, z: 0}
+  _distanceToTarget: 0
+  _pitch: 0
+  _yaw: 0
+  _thrustAmount: 0

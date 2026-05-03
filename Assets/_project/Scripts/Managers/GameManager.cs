@@ -1,29 +1,31 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
-    private bool ShouldQuitGame => Keyboard.current != null && Keyboard.current.escapeKey.wasReleasedThisFrame;
-
-    private void Start()
+    bool ShouldQuitGame => Input.GetKeyUp(KeyCode.Escape);
+    
+    // Start is called before the first frame update
+    void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (ShouldQuitGame)
         {
-            ShouldGame();
+            QuitGame();
         }
     }
 
-    private void ShouldGame()
+    void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
+        // todo handle WebGL
         Application.Quit();
 #endif
     }

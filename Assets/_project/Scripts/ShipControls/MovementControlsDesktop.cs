@@ -1,90 +1,52 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [Serializable]
 public class MovementControlsDesktop : MovementControlsBase
 {
-    [SerializeField]
-    [Min(0f)]
-    private float _mouseDeadzone = 40f;
-    private float _rollAmount = 0f;
+    [SerializeField] float _deadZoneRadius = 0.1f;
+    [SerializeField] float _rollSmoothing = 3f;
 
+    float _rollAmount = 0;
 
-    private Vector2 ScreenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+    Vector2 ScreenCenter => new(Screen.width * 0.5f, Screen.height * 0.5f);
+    Vector2 NormalizedMouseOffset => GetNormalizedMouseOffset();
 
-    public override float ThrustAmount => Input.GetAxis("Vertical");
+    public override float YawAmount => ApplyDeadZone(NormalizedMouseOffset.x);
 
-    public override float PitchAmount
-    {
-        get
-        {
-            Mouse mouse = Mouse.current;
-            if (mouse == null)
-            {
-                return 0f;
-            }
-
-            Vector2 mousePosition = mouse.position.ReadValue();
-            float pitch = GetMouseAxisAmount(mousePosition.y - ScreenCenter.y, ScreenCenter.y);
-            return Mathf.Clamp(pitch, -1f, 1f);
-        }
-    }
+    public override float PitchAmount => -ApplyDeadZone(NormalizedMouseOffset.y);
 
     public override float RollAmount
     {
         get
         {
-            float roll;
-            Keyboard keyboard = Keyboard.current;
-            if (keyboard == null)
-            {
-                roll = 0f;
-            }
-            else
-            {
-                roll = GetKeyboardAxis(keyboard.dKey.isPressed, keyboard.aKey.isPressed);
-            }
-            _rollAmount = Mathf.Lerp(_rollAmount, roll, Time.deltaTime * 3f);
+            float targetRoll = GetTargetRollAmount();
+            _rollAmount = Mathf.Lerp(_rollAmount, targetRoll, Time.deltaTime * _rollSmoothing);
             return _rollAmount;
         }
     }
 
-    public override float YawAmount
-    {
-        get
-        {
-            Mouse mouse = Mouse.current;
-            if (mouse == null)
-            {
-                return 0f;
-            }
+    public override float ThrustAmount => Input.GetAxis("Vertical");
 
-            Vector2 mousePosition = mouse.position.ReadValue();
-            float yaw = GetMouseAxisAmount(mousePosition.x - ScreenCenter.x, ScreenCenter.x);
-            return Mathf.Clamp(yaw, -1f, 1f);
-        }
+    Vector2 GetNormalizedMouseOffset()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Vector2 screenCenter = ScreenCenter;
+
+        return new Vector2(
+            (mousePosition.x - screenCenter.x) / screenCenter.x,
+            (mousePosition.y - screenCenter.y) / screenCenter.y
+        );
     }
 
-    private float GetMouseAxisAmount(float mouseOffset, float screenHalfSize)
+    float ApplyDeadZone(float value)
     {
-        if (Mathf.Abs(mouseOffset) <= _mouseDeadzone)
-        {
-            return 0f;
-        }
-
-        float maxDistanceFromDeadzone = Mathf.Max(1f, screenHalfSize - _mouseDeadzone);
-        float adjustedOffset = mouseOffset - Mathf.Sign(mouseOffset) * _mouseDeadzone;
-        return adjustedOffset / maxDistanceFromDeadzone;
+        return Mathf.Abs(value) > _deadZoneRadius ? value : 0f;
     }
 
-    private float GetKeyboardAxis(bool positivePressed, bool negativePressed)
+    float GetTargetRollAmount()
     {
-        if (positivePressed == negativePressed)
-        {
-            return 0f;
-        }
-
-        return positivePressed ? 1f : -1f;
+        if (Input.GetKey(KeyCode.A)) return 1f;
+        return Input.GetKey(KeyCode.D) ? -1f : 0f;
     }
 }
