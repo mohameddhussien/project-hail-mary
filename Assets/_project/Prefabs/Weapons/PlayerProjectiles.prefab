@@ -209,9 +209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a46b7ffc1b62940aa4dde168cc3e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::NewMonoBehaviourScript
-  launchForce: 10000
+  _launchForce: 10000
   _damage: 100
   _range: 2
+  _hitEffect: {fileID: 6020238336481233079, guid: c6127890d22181b4f9c267f64079a60e, type: 3}
 --- !u!1 &7487997178828521962
 GameObject:
   m_ObjectHideFlags: 0

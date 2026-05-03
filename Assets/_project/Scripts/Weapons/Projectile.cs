@@ -2,28 +2,38 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField][Range(5000f, 25000f)] float launchForce = 10000f;
-    [SerializeField][Range(10, 1000)] int _damage = 100;
-    [SerializeField][Range(2f, 10f)] float _range = 2f;
-    Rigidbody _rigidbody;
+    [SerializeField] [Range(5000f, 25000f)]
+    float _launchForce = 10000f;
+    [SerializeField] [Range(10, 1000)] int _damage = 100;
+    [SerializeField] [Range(2f, 10f)] float _range = 2f;
+    [SerializeField] private Detonator _hitEffect;
 
-    bool outOfFuel { get { duration -= Time.deltaTime; return duration <= 0f; } }
+    bool OutOfFuel
+    {
+        get
+        {
+            _duration -= Time.deltaTime;
+            return _duration <= 0f;
+        }
+    }
+    
+    Rigidbody _rigidBody;
+    float _duration;
 
-    private float duration;
     void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _rigidBody = GetComponent<Rigidbody>();
     }
 
     void OnEnable()
     {
-        _rigidbody.AddForce(launchForce * transform.forward);
-        duration = _range;
+        _rigidBody.AddForce(_launchForce * transform.forward);
+        _duration = _range;
     }
 
     void Update()
     {
-        if (outOfFuel) Destroy(gameObject);
+        if (OutOfFuel) Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -34,5 +44,11 @@ public class Projectile : MonoBehaviour
             Vector3 hitPosition = collision.GetContact(0).point;
             damageable.TakeDamage(_damage, hitPosition);
         }
+
+        if (_hitEffect != null)
+        {
+            Instantiate(_hitEffect, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
 }

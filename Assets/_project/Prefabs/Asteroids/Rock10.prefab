@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5471376693224113060
+--- !u!1 &1140210232585300734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4867006830098944475}
-  - component: {fileID: 5856463456995707731}
-  - component: {fileID: 2449488168391406895}
-  - component: {fileID: 2018524541288343362}
-  - component: {fileID: -6164851721138349748}
-  - component: {fileID: 6427302519173257643}
+  - component: {fileID: 2743152638223228691}
+  - component: {fileID: 8974124850819727028}
+  - component: {fileID: 1491127360895883757}
+  - component: {fileID: 1895340591260217114}
+  - component: {fileID: 6249747578625565828}
+  - component: {fileID: 1242824263941296727}
   m_Layer: 12
-  m_Name: Rock1
+  m_Name: Rock10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4867006830098944475
+--- !u!4 &2743152638223228691
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
+  m_GameObject: {fileID: 1140210232585300734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.31138, y: 0, z: 136.77351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5856463456995707731
+--- !u!33 &8974124850819727028
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
-  m_Mesh: {fileID: -6938710573835471721, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
---- !u!23 &2449488168391406895
+  m_GameObject: {fileID: 1140210232585300734}
+  m_Mesh: {fileID: 3956641430154956442, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
+--- !u!23 &1491127360895883757
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
+  m_GameObject: {fileID: 1140210232585300734}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1de1e5504c8db064f85644d27342d50f, type: 2}
+  - {fileID: 2100000, guid: 691b598e097e6f345b4aaad4d21eb87b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,13 +93,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2018524541288343362
+--- !u!64 &1895340591260217114
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
+  m_GameObject: {fileID: 1140210232585300734}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -114,14 +114,14 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -6938710573835471721, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
---- !u!54 &-6164851721138349748
+  m_Mesh: {fileID: 3956641430154956442, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
+--- !u!54 &6249747578625565828
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
+  m_GameObject: {fileID: 1140210232585300734}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
@@ -142,17 +142,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6427302519173257643
+--- !u!114 &1242824263941296727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471376693224113060}
+  m_GameObject: {fileID: 1140210232585300734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 838fc90f7be5da94b9333c97aa4cdfad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Asteroid
-  _fracturedAsteroidPrefab: {fileID: 3084289819816358775, guid: d2a8cd68ee516da48aae90e05332b8b3, type: 3}
+  _fracturedAsteroidPrefab: {fileID: 7602765815906434799, guid: 2132de44fd234614b87f2791492ac9f5, type: 3}
   _explosionPrefab: {fileID: 5297440271855460793, guid: ec5d8ae6f4f25eb4a86761b0b8732ef4, type: 3}
