@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
     Transform _transform;
     Camera _camera;
     float _targetFillAmount;
+    
 
     void Awake()
     {
