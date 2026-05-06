@@ -1,0 +1,35 @@
+VisualElement {}
+
+#root {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#menu {
+    margin-left: 80px;
+    margin-top: 200px;
+    width: 250px;
+}
+
+Button {
+    height: 60px;
+    margin-bottom: 15px;
+    background-color: rgba(10, 20, 40, 0.6);
+    color: #00D1FF;
+    font-size: 20px;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+}
+
+Button:hover {
+    background-color: rgba(0, 209, 255, 0.2);
+    scale: 1.05;
+}
+
+#footer {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+}

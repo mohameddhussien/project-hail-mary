@@ -3,7 +3,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     bool ShouldQuitGame => Input.GetKeyUp(KeyCode.Escape);
-    
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -14,18 +18,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ShouldQuitGame)
-        {
-            QuitGame();
-        }
+        if (ShouldQuitGame) QuitGame();
     }
 
-    void QuitGame()
+    public void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        // todo handle WebGL
         Application.Quit();
 #endif
     }

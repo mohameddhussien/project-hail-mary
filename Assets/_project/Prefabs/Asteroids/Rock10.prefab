@@ -155,4 +155,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Asteroid
   _fracturedAsteroidPrefab: {fileID: 7602765815906434799, guid: 2132de44fd234614b87f2791492ac9f5, type: 3}
-  _explosionPrefab: {fileID: 5297440271855460793, guid: ec5d8ae6f4f25eb4a86761b0b8732ef4, type: 3}
+  _explosionPrefab: {fileID: 11400000, guid: 4fb30eced14442c46af9f02bdd546b5d, type: 3}

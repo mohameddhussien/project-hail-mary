@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3965e42c8f374624fbb0d9581d995f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::AsteroidField
-  _asteroidCount: 500
-  _radius: 300
+  _asteroidCount: 402
+  _radius: 500
   _maxScale: 5
   _asteroidPrefabs:
   - {fileID: 5471376693224113060, guid: 9340472a5490b674aa0511a7db23ce9c, type: 3}

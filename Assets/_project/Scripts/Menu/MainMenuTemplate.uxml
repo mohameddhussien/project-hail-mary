@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_project/Scripts/Menu/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=53a980e57a04ae945bfa2cc57127e295&amp;type=3#MainMenuStyleSheet"/>
+    <ui:VisualElement name="root">
+        <ui:VisualElement name="menu">
+            <ui:Button name="playBtn" text="Play"/>
+            <ui:Button name="storyBtn" text="Story"/>
+            <ui:Button name="settingsBtn" text="Settings"/>
+            <ui:Button name="exitBtn" text="Exit"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="footer">
+            <ui:Label text="Created by Mohamed Abd-ElNasser, Mohamed Hussien, Mahmoud Mohamed, Abdelrahman Hussien, Marwan Sayed, Mahmoud Amin, Hossam"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
