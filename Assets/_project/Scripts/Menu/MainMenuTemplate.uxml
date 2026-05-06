@@ -1,14 +1,53 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_project/Scripts/Menu/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=53a980e57a04ae945bfa2cc57127e295&amp;type=3#MainMenuStyleSheet"/>
-    <ui:VisualElement name="root">
-        <ui:VisualElement name="menu">
-            <ui:Button name="playBtn" text="Play"/>
-            <ui:Button name="storyBtn" text="Story"/>
-            <ui:Button name="settingsBtn" text="Settings"/>
-            <ui:Button name="exitBtn" text="Exit"/>
+    <ui:VisualElement name="root" style="background-color: rgba(48, 14, 0, 0.18);">
+        <ui:VisualElement name="left-panel" style="background-color: rgba(14, 4, 0, 0.95); width: 547px;">
+            <ui:VisualElement name="title-accent-line"/>
+            <ui:VisualElement name="title-block">
+                <ui:Label name="title-eyebrow" text="MEMORY EXPEDITION // YEAR 2441"/>
+                <ui:Label name="title-main" text="PROJECT" style="font-size: 70px; letter-spacing: -2px;"/>
+                <ui:Label name="title-sub" text="HAIL MARY" style="letter-spacing: -2px; word-spacing: 0; -unity-paragraph-spacing: 0; font-size: 70px;"/>
+                <ui:Label name="title-tagline" text="What you remember shapes the stars."/>
+            </ui:VisualElement>
+            <ui:VisualElement name="divider"/>
+            <ui:VisualElement name="menu">
+                <ui:Button name="playBtn">
+                    <ui:VisualElement name="btn-glow"/>
+                    <ui:Label name="btn-index" text="01" class="btn-index" style="color: rgba(255, 38, 0, 0.4);"/>
+                    <ui:Label name="btn-label" text="LAUNCH MISSION"/>
+                    <ui:VisualElement name="btn-arrow"/>
+                </ui:Button>
+                <ui:Button name="storyBtn">
+                    <ui:VisualElement name="btn-glow"/>
+                    <ui:Label name="btn-index" text="02"/>
+                    <ui:Label name="btn-label" text="INTRO"/>
+                    <ui:VisualElement name="btn-arrow"/>
+                </ui:Button>
+                <ui:Button name="settingsBtn">
+                    <ui:VisualElement name="btn-glow"/>
+                    <ui:Label name="btn-index" text="03"/>
+                    <ui:Label name="btn-label" text="SETTINGS"/>
+                    <ui:VisualElement name="btn-arrow"/>
+                </ui:Button>
+                <ui:Button name="exitBtn">
+                    <ui:VisualElement name="btn-glow"/>
+                    <ui:Label name="btn-index" text="04"/>
+                    <ui:Label name="btn-label" text="ABORT"/>
+                    <ui:VisualElement name="btn-arrow"/>
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:VisualElement name="footer">
+                <ui:Label name="footer-prefix" text="CREW //"/>
+                <ui:Label name="footer-names" text="Mohamed Abd-ElNasser · Mohamed Hussien · Mahmoud Mohamed · Abdelrahman Hussien · Marwan Sayed · Mahmoud Amin · Hossam"/>
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="footer">
-            <ui:Label text="Created by Mohamed Abd-ElNasser, Mohamed Hussien, Mahmoud Mohamed, Abdelrahman Hussien, Marwan Sayed, Mahmoud Amin, Hossam"/>
+        <ui:VisualElement name="right-panel" style="opacity: 1; -unity-background-image-tint-color: rgb(255, 255, 255);">
+            <ui:VisualElement name="ship-hud">
+                <ui:Label name="hud-line" text="VESSEL: HAIL MARY Mk.II"/>
+                <ui:Label name="hud-line" text="STATUS: STANDBY"/>
+                <ui:Label name="hud-line" text="FUEL: ███████░░ 78%"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="scanlines" style="top: -4px; bottom: 5px; right: 3px; left: -2px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
