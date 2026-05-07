@@ -10,10 +10,10 @@ public class ShipController : MonoBehaviour
 
     [SerializeField] Shield _shield;
     [SerializeField]
-    MovementControlsBase _movementControls;
+    protected MovementControlsBase _movementControls;
 
     [SerializeField]
-    WeaponControlsBase _weaponControls;    
+    protected WeaponControlsBase _weaponControls;    
 
     [SerializeField]
     ShipDataSo _shipData;
@@ -31,13 +31,13 @@ public class ShipController : MonoBehaviour
     [Range(-1f, 1f)]
     float _thrustAmount, _pitchAmount, _rollAmount, _yawAmount = 0f;
 
-    DamageHandler _damageHandler;
+    protected DamageHandler _damageHandler;
     
 
     IMovementControls MovementInput => _movementControls;
     IWeaponControls WeaponInput => _weaponControls;
 
-    void OnEnable()
+   public virtual void OnEnable()
     {
         if (_damageHandler == null) return;
         _damageHandler.Init(_shipData.MaxHealth);
@@ -58,9 +58,8 @@ public class ShipController : MonoBehaviour
         if (_shield) _shield.Init(_shipData.ShieldStrength);
     }
 
-    void Update()
+    public virtual void Update()
     {
-        _thrustAmount = MovementInput.ThrustAmount;
         _rollAmount = MovementInput.RollAmount;
         _yawAmount = MovementInput.YawAmount;
         _pitchAmount = MovementInput.PitchAmount;
