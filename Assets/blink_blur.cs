@@ -11,12 +11,33 @@ public class BeautifyTimelineProxy : MonoBehaviour
     [Range(0f, 1f)] public float blurIntensity;
     [Range(0f, 1f)] public float blinkIntensity;
 
+  
+
     void Awake()
     {
         _volume = GetComponent<Volume>();
-        _volume.profile.TryGet(out _beautify);
-    }
 
+        // Create runtime copy
+        _volume.profile = Instantiate(_volume.profile);
+
+        _volume.profile.TryGet(out _beautify);
+
+        // Force the effect itself active
+        _beautify.active = true;
+
+        // Force each parameter's checkbox on manually
+        _beautify.blurIntensity.overrideState = true;
+        _beautify.vignettingBlink.overrideState = true;
+
+        // Add every other property you use here the same way
+        _beautify.vignettingOuterRing.overrideState = true;
+        _beautify.vignettingInnerRing.overrideState = true;
+
+        _beautify.vignettingOuterRing.value = 0.8f;
+        _beautify.vignettingInnerRing.value = 0.6f;
+
+        // etc...
+    }
 
     void Update()
     {
