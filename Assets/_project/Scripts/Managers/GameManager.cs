@@ -31,6 +31,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (ShouldQuitGame) QuitGame();
+        if (Input.GetKeyDown(KeyCode.F1)) Time.timeScale = 0f;
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Cursor.visible = !Cursor.visible;
+            Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Confined;
+        }
     }
 
     public void QuitGame()

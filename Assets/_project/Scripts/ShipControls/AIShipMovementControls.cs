@@ -15,7 +15,7 @@ public class AIShipMovementControls : MovementControlsBase
     [SerializeField]
     bool _enablePitch = true;
 
-     [SerializeField]
+    [SerializeField]
     PIDController _pitchPidController;
 
     [SerializeField] CollisionAvoidance _collisionAvoidance;
@@ -31,7 +31,7 @@ public class AIShipMovementControls : MovementControlsBase
     public float _distanceToTarget;
     public float _pitch, _yaw, _thrust;
     Transform _transform;
-    [SerializeField] float _yawAmount, _pitchAmount, _rollAmount, _thrustAmount, _horizontalAvoidance, _verticalAvoidance;
+    float _yawAmount, _pitchAmount, _rollAmount, _thrustAmount, _horizontalAvoidance, _verticalAvoidance;
 
     void Awake()
     {
@@ -72,7 +72,7 @@ public class AIShipMovementControls : MovementControlsBase
     {
         if (!_target) return 0f;
         if (!Mathf.Approximately(0f, _verticalAvoidance) || !Mathf.Approximately(0f, _horizontalAvoidance)) return 0f;
-        return Math.Abs(_yaw) > 0.25f ? _yaw * -1 : 0f;
+        return Math.Abs(_yaw) > 0.25f ? _yawAmount * -1 : 0f;
     }
 
     float GetThrustAmount()

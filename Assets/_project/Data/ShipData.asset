@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7e6261cc832b9499de2c34a901541f, type: 3}
   m_Name: ShipData
   m_EditorClassIdentifier: 3DSpaceShooter::ShipDataSo
-  _thrustForce: 7500
-  _pitchForce: 6000
+  _thrustForce: 3000
+  _pitchForce: 2000
   _rollForce: 1000
   _yawForce: 2000
-  _shieldStrength: 500
+  _shieldStrength: 1000
   _shieldRegenAmount: 100
-  _maxHealth: 1000
+  _maxHealth: 2000
   _blasterDamage: 100
   _blasterLaunchForce: 10000
   _blasterCoolDown: 0.25

@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraWobble : MonoBehaviour
 {
     [Header("References")]
-    public Camera targetCamera;
+    public GameObject targetCamera;
 
     [Header("Wobble Settings")]
     public float rotationAmount = 5f;      // Max tilt in degrees
@@ -19,7 +19,11 @@ public class CameraWobble : MonoBehaviour
     void Start()
     {
         if (targetCamera == null)
-            targetCamera = Camera.main;
+        {
+            Debug.LogError("CameraWobble: Target GameObject not assigned!");
+            enabled = false;
+            return;
+        }
 
         initialRotation = targetCamera.transform.localRotation;
     }
@@ -28,26 +32,26 @@ public class CameraWobble : MonoBehaviour
     {
         if (targetCamera == null) return;
 
-        // 🖱️ Mouse position normalized (-1 to 1)
-        float mouseX = (Input.mousePosition.x / Screen.width) * 2f - 1f;
-        float mouseY = (Input.mousePosition.y / Screen.height) * 2f - 1f;
+        // Mouse position normalized (-1 to 1)
+        float mouseX = Input.mousePosition.x / Screen.width * 2f - 1f;
+        float mouseY = Input.mousePosition.y / Screen.height * 2f - 1f;
 
-        // 🎯 Target rotation based on mouse
+        // Target rotation based on mouse
         float rotX = -mouseY * rotationAmount;
         float rotY = mouseX * rotationAmount;
 
         Quaternion targetRotation = Quaternion.Euler(rotX, rotY, 0f);
 
-        // 🌊 Idle wobble (subtle sine wave)
+        // Idle wobble (subtle sine wave)
         float idleX = Mathf.Sin(Time.time * idleFrequency) * idleAmplitude;
         float idleY = Mathf.Cos(Time.time * idleFrequency) * idleAmplitude;
 
         Quaternion idleRotation = Quaternion.Euler(idleX, idleY, 0f);
 
-        // 🎯 Final rotation
+        // Final rotation
         Quaternion finalRotation = initialRotation * targetRotation * idleRotation;
 
-        // 🧈 Smooth interpolation
+        // Smooth interpolation
         targetCamera.transform.localRotation = Quaternion.Slerp(
             targetCamera.transform.localRotation,
             finalRotation,

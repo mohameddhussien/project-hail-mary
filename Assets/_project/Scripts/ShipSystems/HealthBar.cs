@@ -27,7 +27,7 @@ public class HealthBar : MonoBehaviour
             return;
 
         _damageHandler.HealthChanged.AddListener(UpdateHealthBar);
-
+        _damageHandler.ObjectDestroyed.AddListener(DisableHealthBar);
         // Ensure UI is synced when enabled
         UpdateHealthBar();
     }
@@ -38,6 +38,7 @@ public class HealthBar : MonoBehaviour
             return;
 
         _damageHandler.HealthChanged.RemoveListener(UpdateHealthBar);
+        _damageHandler.ObjectDestroyed.RemoveListener(DisableHealthBar);
     }
 
     private void LateUpdate()
@@ -47,8 +48,7 @@ public class HealthBar : MonoBehaviour
         {
             _camera = Camera.main;
 
-            if (_camera == null)
-                return;
+            if (_camera == null) return;
         }
 
         // Billboard toward camera
@@ -60,11 +60,7 @@ public class HealthBar : MonoBehaviour
         if (Mathf.Approximately(_healthBarImage.fillAmount, _targetFillAmount))
             return;
 
-        _healthBarImage.fillAmount = Mathf.MoveTowards(
-            _healthBarImage.fillAmount,
-            _targetFillAmount,
-            _updateRate * Time.deltaTime
-        );
+        _healthBarImage.fillAmount = Mathf.MoveTowards(_healthBarImage.fillAmount, _targetFillAmount, _updateRate * Time.deltaTime);
     }
 
     private void UpdateHealthBar()
@@ -80,5 +76,10 @@ public class HealthBar : MonoBehaviour
         }
 
         _targetFillAmount = (float)_damageHandler.Health / _damageHandler.MaxHealth;
+    }
+
+    void DisableHealthBar()
+    {
+        gameObject.SetActive(false);
     }
 }
