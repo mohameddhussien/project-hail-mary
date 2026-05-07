@@ -12,6 +12,7 @@ public class HealthBar : MonoBehaviour
 
     private float _targetFillAmount;
 
+
     private void Awake()
     {
         _transform = transform;
