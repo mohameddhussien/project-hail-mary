@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    
     bool ShouldQuitGame => Input.GetKeyUp(KeyCode.Escape);
 
-    public static GameManager Instance;
-
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -15,23 +16,30 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-
-        transform.SetParent(null);
-        DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        MusicManager.Instance.PlayPatrolMusic();
+    }
+
     void Update()
     {
-        if (ShouldQuitGame) QuitGame();
-        if (Input.GetKeyDown(KeyCode.F1)) Time.timeScale = 0f;
+        if (ShouldQuitGame)
+        {
+            QuitGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Time.timeScale = 0f;
+        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -40,11 +48,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void QuitGame()
+    public void InCombat(bool inCombat)
+    {
+        if (inCombat)
+        {
+            MusicManager.Instance.PlayCombatMusic();
+            return;
+        }
+
+        MusicManager.Instance.PlayPatrolMusic();
+    }
+    void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
+        // todo handle WebGL
         Application.Quit();
 #endif
     }
