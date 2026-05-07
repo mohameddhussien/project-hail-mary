@@ -8,8 +8,10 @@ public class Blaster : MonoBehaviour
     
     float _coolDownTime;
     int _launchForce, _damage;
-    private float _duration;
+    float _duration;
     IWeaponControls _weaponInput;
+    float _coolDown;
+    Rigidbody _rigidBody;
     
     bool CanFire
     {
@@ -20,9 +22,7 @@ public class Blaster : MonoBehaviour
         }
     }
     
-    float _coolDown;
-    
-    // Update is called once per frame
+
     void Update()
     {
         if (_weaponInput == null) return;
@@ -32,22 +32,24 @@ public class Blaster : MonoBehaviour
         } 
     }
 
-    public void Init(IWeaponControls weaponInput, float coolDown, int launchForce, float duration, int damage)
+    public void Init(IWeaponControls weaponInput, float coolDown, int launchForce, float duration, int damage, Rigidbody rigidBody)
     {
-        Debug.Log($"Blaster.Init({weaponInput}, {coolDown}, launchForce, {duration}");
         _weaponInput = weaponInput;
         _coolDownTime = coolDown;
         _launchForce = launchForce;
         _duration = duration;
         _damage = damage;
+        _rigidBody = rigidBody;
     }
     
     void FireProjectile()
     {
         _coolDown = _coolDownTime;
+        if (_projectilePrefab == null || _muzzle == null) return;
+        
         Projectile projectile = Instantiate(_projectilePrefab, _muzzle.position, transform.rotation);
         projectile.gameObject.SetActive(false);
-        projectile.Init(_launchForce, _damage, _duration);
+        projectile.Init(_launchForce, _damage, _duration, _rigidBody.linearVelocity, _rigidBody.angularVelocity);
         projectile.gameObject.SetActive(true);
     }
 

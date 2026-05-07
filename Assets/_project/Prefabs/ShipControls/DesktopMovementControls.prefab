@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6804c77e675ff4886b145e14229b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::MovementControlsDesktop
-  _deadZoneRadius: 0.2
+  _deadZoneRadius: 0.05
+  _rollSmoothing: 1

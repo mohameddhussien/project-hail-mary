@@ -3,9 +3,13 @@ using UnityEngine.Events;
 
 public class DamageHandler : MonoBehaviour, IDamageable
 {
-    [SerializeField] GameObject _explosionPrefab;
-    UnityEvent _healthChangedEvent;
-    UnityEvent _objectDestroyedEvent;
+    [SerializeField] private GameObject _explosionPrefab;
+
+    private UnityEvent _healthChangedEvent;
+    private UnityEvent _objectDestroyedEvent;
+
+    private bool _isDead;
+
     public int MaxHealth { get; private set; }
     public int Health { get; private set; }
 
@@ -14,19 +18,39 @@ public class DamageHandler : MonoBehaviour, IDamageable
 
     public void Init(int maxHealth)
     {
-        Health = MaxHealth = maxHealth;
+        MaxHealth = maxHealth;
+        Health = maxHealth;
+        _isDead = false;
+
         HealthChanged.Invoke();
     }
 
     public void TakeDamage(int damage, Vector3 hitPosition)
     {
-        Health -= damage;
+        // Prevent taking damage after death
+        if (_isDead)
+            return;
+
+        // Prevent negative damage
+        damage = Mathf.Max(damage, 0);
+
+        // Clamp health to 0
+        Health = Mathf.Max(Health - damage, 0);
+
         HealthChanged.Invoke();
-        if (Health > 0) return;
-        if (_explosionPrefab)
-        {
+
+        // Still alive
+        if (Health > 0)
+            return;
+
+        // Mark as dead
+        _isDead = true;
+
+        // Spawn explosion effect
+        if (_explosionPrefab != null)
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-        }
+
+        // Notify listeners
         ObjectDestroyed.Invoke();
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2539953949194616701}
   - component: {fileID: 102944199265536240}
   - component: {fileID: 8240704682547947422}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3600349813345197185}
   - component: {fileID: 5697863557552941614}
   - component: {fileID: 536059520750092976}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,8 @@ GameObject:
   - component: {fileID: 8666590048590987054}
   - component: {fileID: 2040084277721696202}
   - component: {fileID: 3074043121038057882}
-  m_Layer: 0
+  - component: {fileID: 2690755926995597243}
+  m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +177,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3652704377646152662}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
@@ -253,3 +254,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2690755926995597243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3652704377646152662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85566e96784660442940f0cc0a791120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::HealthBar
+  _healthBarImage: {fileID: 8240704682547947422}
+  _updateRate: 1
+  _damageHandler: {fileID: 0}

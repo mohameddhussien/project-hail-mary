@@ -4,10 +4,22 @@ public class GameManager : MonoBehaviour
 {
     bool ShouldQuitGame => Input.GetKeyUp(KeyCode.Escape);
 
-    void Awake()
+    public static GameManager Instance;
+
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        transform.SetParent(null);
         DontDestroyOnLoad(gameObject);
     }
+
     // Start is called before the first frame update
     void Start()
     {

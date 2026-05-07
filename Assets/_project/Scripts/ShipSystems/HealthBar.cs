@@ -3,53 +3,82 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] Image _healthBarImage;
-    [SerializeField] float _updateRate = 1f;
-    [SerializeField] DamageHandler _damageHandler;
+    [SerializeField] private Image _healthBarImage;
+    [SerializeField] private float _updateRate = 1f;
+    [SerializeField] private DamageHandler _damageHandler;
 
-    Transform _transform;
-    Camera _camera;
-    float _targetFillAmount;
+    private Transform _transform;
+    private Camera _camera;
 
+    private float _targetFillAmount;
 
-    void Awake()
+    private void Awake()
     {
         _transform = transform;
-        _camera = Camera.main;
-        if (_damageHandler == null) return;
+
+        if (_damageHandler != null)
+            // Sync immediately in case Init() already happened
+            UpdateHealthBar();
+    }
+
+    private void OnEnable()
+    {
+        if (_damageHandler == null)
+            return;
+
+        _damageHandler.HealthChanged.AddListener(UpdateHealthBar);
+
+        // Ensure UI is synced when enabled
         UpdateHealthBar();
     }
 
-    void OnEnable()
+    private void OnDisable()
     {
-        if (_damageHandler == null) return;
-        _damageHandler.HealthChanged.AddListener(UpdateHealthBar);
-    }
+        if (_damageHandler == null)
+            return;
 
-    void OnDisable()
-    {
-        if (_damageHandler == null) return;
         _damageHandler.HealthChanged.RemoveListener(UpdateHealthBar);
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        _transform.LookAt(_camera.transform);
-        if (_damageHandler == null || _healthBarImage == null) return;
-        if (Mathf.Approximately(_healthBarImage.fillAmount, _targetFillAmount)) return;
-        _healthBarImage.fillAmount =
-            Mathf.MoveTowards(_healthBarImage.fillAmount, _targetFillAmount, _updateRate * Time.deltaTime);
+        // Camera.main can be null temporarily
+        if (_camera == null)
+        {
+            _camera = Camera.main;
+
+            if (_camera == null)
+                return;
+        }
+
+        // Billboard toward camera
+        _transform.forward = _camera.transform.forward;
+
+        if (_damageHandler == null || _healthBarImage == null)
+            return;
+
+        if (Mathf.Approximately(_healthBarImage.fillAmount, _targetFillAmount))
+            return;
+
+        _healthBarImage.fillAmount = Mathf.MoveTowards(
+            _healthBarImage.fillAmount,
+            _targetFillAmount,
+            _updateRate * Time.deltaTime
+        );
     }
 
-    void UpdateHealthBar()
+    private void UpdateHealthBar()
     {
-        if (_damageHandler == null) return;
-        if (_damageHandler.Health == 0)
+        if (_damageHandler == null || _healthBarImage == null)
+            return;
+
+        // Prevent divide by zero
+        if (_damageHandler.MaxHealth <= 0)
         {
-            _targetFillAmount = 0;
+            _targetFillAmount = 0f;
             return;
         }
 
-        _targetFillAmount = (float)_damageHandler.Health / (float)_damageHandler.MaxHealth;
+        _targetFillAmount = (float)_damageHandler.Health / _damageHandler.MaxHealth;
     }
 }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class PIDController
+public class PIDController 
 {
     public enum DerivativeMeasurement
     {
@@ -11,11 +11,19 @@ public class PIDController
     }
 
     [SerializeField]
-    float _proportionalGain, _integralGain, _derivativeGain, _minOutput, _maxOutput, _integralSaturation;
+    float 
+        _proportionalGain = 0.5f, 
+        _integralGain, 
+        _derivativeGain =0.1f,
+        _minOutput = -1f,
+        _maxOutput = 1f,
+        _integralSaturation;
 
-    [SerializeField] DerivativeMeasurement _derivativeMeasurement;
+    [SerializeField]
+    DerivativeMeasurement _derivativeMeasurement;
 
-    [SerializeField] private bool _enablePid = true;
+    [SerializeField]
+    private bool _enablePid = true;
 
     public float _lastValue, _lastError, _integrationStored, _velocity;
     private bool _derivativeInitialized;
@@ -24,7 +32,7 @@ public class PIDController
     {
         _derivativeInitialized = false;
     }
-
+    
     public float Update(float deltaTime, float currentValue, float targetValue)
     {
         if (!_enablePid) return targetValue;
@@ -50,15 +58,23 @@ public class PIDController
         //choose D term to use
         float deriveMeasure = 0;
 
-        if (_derivativeInitialized)
+        if (_derivativeInitialized) 
         {
-            if (_derivativeMeasurement == DerivativeMeasurement.Velocity) deriveMeasure = -valueRateOfChange;
-            else deriveMeasure = errorRateOfChange;
+            if (_derivativeMeasurement == DerivativeMeasurement.Velocity) {
+                deriveMeasure = -valueRateOfChange;
+            } else {
+                deriveMeasure = errorRateOfChange;
+            }
+        } 
+        else 
+        {
+            _derivativeInitialized = true;
         }
-        else _derivativeInitialized = true;
 
         float D = _derivativeGain * deriveMeasure;
 
-        return Mathf.Clamp(P + I + D, _minOutput, _maxOutput);
-    }
+        float result = P + I + D;
+
+        return Mathf.Clamp(result, _minOutput, _maxOutput);
+    }    
 }
