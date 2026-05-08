@@ -25,7 +25,7 @@ public class EnemyShipController : ShipController
     GameObject PlayerShip => GameObject.FindGameObjectWithTag("Player");
     Transform _target;
 
-    public UnityEvent<int> ShipDestroyed = new UnityEvent<int>();
+    public UnityEvent<int> ShipDestroyed = new();
 
     #region Public data for debugging
 
@@ -145,15 +145,15 @@ public class EnemyShipController : ShipController
 
                 _target = PlayerShip.transform;
                 _aiShipMovementControls.SetTarget(_target);
-                // SetWeaponsTarget(_target, _attackRange, _targetMask);
+                SetWeaponsTarget(_target, _attackRange, _targetMask);
                 break;
             case EnemyShipState.Reposition:
                 _aiShipMovementControls.SetTarget(_target = GetRepositionTarget());
-                // SetWeaponsTarget(null, 0, 0);
+                SetWeaponsTarget(null, 0, 0);
                 break;
             case EnemyShipState.Retreat:
                 _aiShipMovementControls.SetTarget(_target = GetRetreatTarget());
-                // SetWeaponsTarget(null, 0, 0);
+                SetWeaponsTarget(null, 0, 0);
                 break;
         }
     }

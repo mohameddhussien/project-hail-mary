@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b82177ff0cd76d439cc1969f6753b91, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b7e6261cc832b9499de2c34a901541f, type: 3}
   m_Name: EnemyFighter
-  m_EditorClassIdentifier: 
-  _thrustForce: 7000
-  _pitchForce: 1400
+  m_EditorClassIdentifier: 3DSpaceShooter::ShipDataSo
+  _thrustForce: 3500
+  _pitchForce: 2000
   _rollForce: 1000
   _yawForce: 1200
   _shieldStrength: 1000

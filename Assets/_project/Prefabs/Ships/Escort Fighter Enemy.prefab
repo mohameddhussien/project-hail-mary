@@ -3148,6 +3148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3025650605740411035}
   - component: {fileID: 7290558197175441263}
+  - component: {fileID: 5801660403317010890}
   m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
@@ -3235,6 +3236,35 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &5801660403317010890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641378202159024064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &2647286111049884931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,7 +4060,7 @@ MonoBehaviour:
   _shield: {fileID: 3131930194509108731}
   _movementControls: {fileID: 681513317146698154}
   _weaponControls: {fileID: 8160330753748957273}
-  _shipData: {fileID: 0}
+  _shipData: {fileID: 11400000, guid: 27dfe6d3eaabc7842affbf8429d27f50, type: 2}
   _engines:
   - {fileID: 4152685882128850718}
   - {fileID: 3811980025014556536}
@@ -4042,8 +4072,8 @@ MonoBehaviour:
   - {fileID: 6119757212986393430}
   - {fileID: 2840009903619420126}
   _cockpitAnimationControls: {fileID: 0}
-  _patrolRange: 2000
-  _attackRange: 1000
+  _patrolRange: 3000
+  _attackRange: 10000
   _targetMask:
     serializedVersion: 2
     m_Bits: 4544
@@ -4184,7 +4214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Blaster
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: 8169006735821822190, guid: d2793cf63c0b83c429f056d2493d2ce6, type: 3}
   _fireSound: {fileID: 8300000, guid: de812cfb519929c4aad9d296f655c81d, type: 3}
   _muzzle: {fileID: 2091972481920759783}
 --- !u!82 &59499590317211994
@@ -5450,6 +5480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6812300122512939823}
   - component: {fileID: 6033590943359349530}
+  - component: {fileID: 3974787286440539877}
   m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
@@ -5537,6 +5568,35 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &3974787286440539877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623884206651912156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &4684138400892301976
 GameObject:
   m_ObjectHideFlags: 0
@@ -6561,7 +6621,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5426584878745333036}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
@@ -6576,7 +6636,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5426584878745333036}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2864700369308022427, guid: 1d3cf54a6ff784547b232a2ec8215509, type: 2}
   m_audioClip: {fileID: 0}
@@ -6840,7 +6900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Blaster
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: 8169006735821822190, guid: d2793cf63c0b83c429f056d2493d2ce6, type: 3}
   _fireSound: {fileID: 8300000, guid: de812cfb519929c4aad9d296f655c81d, type: 3}
   _muzzle: {fileID: 2503803332151786763}
 --- !u!82 &2590524978515413288
@@ -7656,7 +7716,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6259032413023185989}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
@@ -7671,7 +7731,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6259032413023185989}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2864700369308022427, guid: 1d3cf54a6ff784547b232a2ec8215509, type: 2}
   m_audioClip: {fileID: 0}
@@ -8842,6 +8902,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8600000355284800187}
   - component: {fileID: 6198447788829540267}
+  - component: {fileID: 564054188301347802}
   m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
@@ -8929,6 +8990,35 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &564054188301347802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7053338357707298640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &7065049991565639324
 GameObject:
   m_ObjectHideFlags: 0
@@ -8972,6 +9062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7685128757338236283}
   - component: {fileID: 4488396653894306971}
+  - component: {fileID: 2633631325566410015}
   m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
@@ -9059,6 +9150,35 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &2633631325566410015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088622156093592113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &7099659043432221327
 GameObject:
   m_ObjectHideFlags: 0
@@ -11682,7 +11802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 98537843545002941, guid: 39782a2d9356ae3418d7eeecb7f9c50c, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919512949359568275, guid: 39782a2d9356ae3418d7eeecb7f9c50c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11755,7 +11875,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 588611892370797079}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9c4d8b2acc3ff04592ff8f0ea03e0b8, type: 3}
   m_Name: 
