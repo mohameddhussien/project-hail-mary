@@ -1,19 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+// [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private Detonator _hitEffect;
+    [SerializeField] Detonator _hitEffect;
+    [SerializeField] AudioClip _impactSound;
+
+    float _launchForce;
     int _damage;
-    float _range, _duration, _launchForce;
+    float _range;
+    float _duration;
     Rigidbody _rigidBody;
-    
-    bool OutOfFuel { get { _duration -= Time.deltaTime; return _duration <= 0f; } }
+    AudioSource _audioSource;
+
+    bool OutOfFuel
+    {
+        get
+        {
+            _duration -= Time.deltaTime;
+            return _duration <= 0f;
+        }
+    }
 
 
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
+        _audioSource = SoundManager.Configure3DAudioSource(GetComponent<AudioSource>());
     }
 
     void OnEnable()
@@ -45,12 +59,13 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log($"Projectile collided with ({collision.gameObject.name})");
+        if (_impactSound) _audioSource.PlayOneShot(_impactSound);
         if (collision.collider.gameObject.TryGetComponent<IDamageable>(out var damageable))
             damageable.TakeDamage(_damage, collision.GetContact(0).point);
 
         if (_hitEffect != null)
             Instantiate(_hitEffect, transform.position, Quaternion.identity);
-
+        
         Destroy(gameObject);
     }
 }
