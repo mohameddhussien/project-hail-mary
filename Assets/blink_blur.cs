@@ -10,8 +10,11 @@ public class BeautifyTimelineProxy : MonoBehaviour
 
     [Range(0f, 1f)] public float blurIntensity;
     [Range(0f, 1f)] public float blinkIntensity;
+    [Range(0f, 1f)] public float Outer_Ring;
+    [Range(0f, 1f)] public float InnerRing;
+    [Range(0f, 1f)] public float Fade;
 
-  
+
 
     void Awake()
     {
@@ -28,15 +31,17 @@ public class BeautifyTimelineProxy : MonoBehaviour
         // Force each parameter's checkbox on manually
         _beautify.blurIntensity.overrideState = true;
         _beautify.vignettingBlink.overrideState = true;
+        
 
         // Add every other property you use here the same way
         _beautify.vignettingOuterRing.overrideState = true;
         _beautify.vignettingInnerRing.overrideState = true;
+        _beautify.vignettingFade.overrideState = true;
+        _beautify.blurStyle.overrideState = true;
+        
 
-        _beautify.vignettingOuterRing.value = 0.8f;
-        _beautify.vignettingInnerRing.value = 0.6f;
 
-        // etc...
+
     }
 
     void Update()
@@ -59,5 +64,10 @@ public class BeautifyTimelineProxy : MonoBehaviour
         if (_beautify == null) return;
         _beautify.blurIntensity.value = blurIntensity;  
         _beautify.vignettingBlink.value = blinkIntensity;
+
+        _beautify.vignettingOuterRing.value = Outer_Ring;
+        _beautify.vignettingInnerRing.value = InnerRing;
+        _beautify.vignettingFade.value = Fade;
+        
     }
 }
