@@ -1,7 +1,0 @@
-﻿<Solution>
-  <Project Path="BeautifyEditor.csproj" />
-  <Project Path="3DSpaceShooter.csproj" />
-  <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
-  <Project Path="Detonator.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-</Solution>
