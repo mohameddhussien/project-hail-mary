@@ -11,12 +11,13 @@ public class EnemyShipManager : MonoBehaviour
     [SerializeField] float _firstSpawnInterval = 10f, _spawnInterval = 30f;
     [SerializeField] float _minSpawnRange = 500f, _maxSpawnRange = 2000f;
 
-    List<GameObject> _enemyShips;
+
+    List<EnemyShipController> _enemyShips;
     float _spawnDelay;
     Transform _transform;
     int MaxEnemies { get; set; }
     float SpawnInterval { get; set; }
-    int ActiveEnemies => _enemyShips.Count(e => e.activeSelf);
+    int ActiveEnemies => _enemyShips.Count(e => e.gameObject.activeSelf);
 
     bool CanSpawnEnemyShip
     {
@@ -38,9 +39,14 @@ public class EnemyShipManager : MonoBehaviour
 
     void OnEnable()
     {
-        _enemyShips = new List<GameObject>();
+        _enemyShips = new List<EnemyShipController>();
         _spawnDelay = _firstSpawnInterval;
     }
+    void Start()
+    {
+        GameManager.Instance.GameStateChanged += OnGameStateChanged;
+    }
+
 
     void Update()
     {
@@ -52,10 +58,12 @@ public class EnemyShipManager : MonoBehaviour
 
     void SpawnEnemyShip()
     {
+        if (GameManager.Instance.GameState == GameState.GameOver) return;
         var spawnPosition = Random.insideUnitSphere * Random.Range(_minSpawnRange, _maxSpawnRange);
         var enemy = Instantiate(RandomPrefab, _transform);
-        enemy.GetComponent<EnemyShipController>().ShipDestroyed.AddListener(OnShipDestroyed);
-        _enemyShips.Add(enemy);
+        EnemyShipController enemyShipController = enemy.GetComponent<EnemyShipController>();
+        enemyShipController.ShipDestroyed.AddListener(OnShipDestroyed);
+        _enemyShips.Add(enemyShipController);
         enemy.transform.position = spawnPosition;
         _spawnDelay = SpawnInterval;
     }
@@ -65,13 +73,26 @@ public class EnemyShipManager : MonoBehaviour
         for (var i = 0; i < _enemyShips.Count; ++i)
         {
             var ship = _enemyShips[i];
-            if (ship.GetInstanceID() != id) continue;
+            if (ship.gameObject.GetInstanceID() != id) continue;
             _enemyShips.RemoveAt(i);
             ship.GetComponent<EnemyShipController>().ShipDestroyed.RemoveListener(OnShipDestroyed);
             Destroy(ship.gameObject);
+            GameManager.Instance.PlayerWon();
             return;
         }
 
         ++MaxEnemies;
+    }
+    void OnGameStateChanged(GameState gameState)
+    {
+        if (gameState != GameState.GameOver) return;
+        while(_enemyShips.Any())
+        {
+            var ship = _enemyShips[0];
+            ship.GetComponent<EnemyShipController>().ShipDestroyed.RemoveListener(OnShipDestroyed);
+            ship.gameObject.SetActive(false);
+            _enemyShips.RemoveAt(0);
+            
+        }
     }
 }

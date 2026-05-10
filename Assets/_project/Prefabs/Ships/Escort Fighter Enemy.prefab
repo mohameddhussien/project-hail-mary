@@ -3942,6 +3942,7 @@ GameObject:
   - component: {fileID: 5580877860189143654}
   - component: {fileID: 2630825654233376182}
   - component: {fileID: 8658763718664982297}
+  - component: {fileID: 22910406810943825}
   m_Layer: 9
   m_Name: Escort Fighter Enemy
   m_TagString: Untagged
@@ -4025,7 +4026,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196444643100467415}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23fb1e469a8ed0944a4ebfda46f63bfc, type: 3}
   m_Name: 
@@ -4095,7 +4096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a4846ec846d6441bed0e54a3108862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::DamageHandler
-  _explosionPrefab: {fileID: 100000, guid: 9fc401e6f1fa041488c7b614a35ec1ca, type: 3}
+  _explosionPrefab: {fileID: 100000, guid: 3e607bd7120dfcf4aa5f6700d3c0d1ed, type: 3}
 --- !u!114 &8658763718664982297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,6 +4109,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd3b2a89f7fcad4eaa27ee4192230d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Targetable
+--- !u!114 &22910406810943825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196444643100467415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b6fcbf02621f64f9201bb723d00e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::AddPointsWhenDestroyed
+  _points: 1000
 --- !u!1 &3240733186811737394
 GameObject:
   m_ObjectHideFlags: 0
@@ -4214,7 +4228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Blaster
-  _projectilePrefab: {fileID: 8169006735821822190, guid: d2793cf63c0b83c429f056d2493d2ce6, type: 3}
+  _projectilePrefab: {fileID: 8169006735821822190, guid: 9f1e97ae16b3e4344b6f2e83b99722dc, type: 3}
   _fireSound: {fileID: 8300000, guid: de812cfb519929c4aad9d296f655c81d, type: 3}
   _muzzle: {fileID: 2091972481920759783}
 --- !u!82 &59499590317211994
@@ -6900,7 +6914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6994b0918c978940b6920ed205c75b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Blaster
-  _projectilePrefab: {fileID: 8169006735821822190, guid: d2793cf63c0b83c429f056d2493d2ce6, type: 3}
+  _projectilePrefab: {fileID: 8169006735821822190, guid: 9f1e97ae16b3e4344b6f2e83b99722dc, type: 3}
   _fireSound: {fileID: 8300000, guid: de812cfb519929c4aad9d296f655c81d, type: 3}
   _muzzle: {fileID: 2503803332151786763}
 --- !u!82 &2590524978515413288

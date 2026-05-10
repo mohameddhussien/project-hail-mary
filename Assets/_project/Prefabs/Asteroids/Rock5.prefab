@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2393196746904523936}
   - component: {fileID: 3493520373277782507}
   - component: {fileID: 3734674276486086905}
+  - component: {fileID: 6186671593432869660}
   m_Layer: 12
   m_Name: Rock5
   m_TagString: Untagged
@@ -155,4 +156,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 3DSpaceShooter::Asteroid
   _fracturedAsteroidPrefab: {fileID: 5089770056585245289, guid: 8d261c7d83b79fa40a4d49ab45c251f7, type: 3}
-  _explosionPrefab: {fileID: 11400000, guid: 4fb30eced14442c46af9f02bdd546b5d, type: 3}
+  _explosionPrefab: {fileID: 11400000, guid: f7c9f844656d9c548a04918b9fc5aa6d, type: 3}
+--- !u!114 &6186671593432869660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402387827888133745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b6fcbf02621f64f9201bb723d00e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::AddPointsWhenDestroyed
+  _points: 20
