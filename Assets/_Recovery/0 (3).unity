@@ -3165,7 +3165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 3DSpaceShooter::EnemyShipManager
   _enemyShipPrefabs:
   - {fileID: 3196444643100467415, guid: d9eb0958dabbebe43b8b6c09c461b414, type: 3}
-  _maxEnemies: 2
+  _maxEnemies: 1
   _firstSpawnInterval: 10
   _spawnInterval: 30
   _minSpawnRange: 500
@@ -4221,9 +4221,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameOverManager, 3DSpaceShooter
-        m_MethodName: GoToMainMenu
+      - m_Target: {fileID: 301863065}
+        m_TargetAssemblyTypeName: GameOverPanel, 3DSpaceShooter
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

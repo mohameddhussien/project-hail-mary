@@ -4,9 +4,9 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
-    public event Action<int> ScoreChanged = delegate(int i) {  };
-    public event Action<int> HighScoreChanged = delegate(int i) {  };
-    
+    public event Action<int> ScoreChanged = delegate (int i) { };
+    public event Action<int> HighScoreChanged = delegate (int i) { };
+
     public int Score { get; private set; }
     public int HighScore { get; private set; }
 
@@ -14,6 +14,9 @@ public class ScoreManager : MonoBehaviour
     {
         Score = 0;
         ScoreChanged(Score);
+
+        HighScore = 0;
+        HighScoreChanged(HighScore);
     }
 
     public void AddPoints(int points)
@@ -24,7 +27,7 @@ public class ScoreManager : MonoBehaviour
         HighScore = Score;
         HighScoreChanged(HighScore);
     }
-    
+
     void Awake()
     {
         if (Instance != null && Instance != this)

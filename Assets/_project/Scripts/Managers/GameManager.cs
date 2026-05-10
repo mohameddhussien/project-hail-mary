@@ -4,13 +4,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
-    public event Action<GameState> GameStateChanged = delegate(GameState state) {  };
+
+    public event Action<GameState> GameStateChanged = delegate (GameState state) { };
 
     public GameState GameState { get; private set; }
-    
+
     bool ShouldQuitGame => Input.GetKeyUp(KeyCode.Escape);
-    
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         if (inCombat)
         {
             MusicManager.Instance.PlayCombatMusic();
-            SetGameState(GameState.Combat); 
+            SetGameState(GameState.Combat);
             return;
         }
 
@@ -76,15 +76,27 @@ public class GameManager : MonoBehaviour
     public void PlayerWon()
     {
         MusicManager.Instance.PlayGameOverMusic();
-        SetGameState(GameState.GameOver);    
+        SetGameState(GameState.GameOver);
     }
-    
+
+    /// <summary>
+    /// Called by GameOverPanel.TryAgain() to reset this persisting singleton
+    /// back to Patrol before the scene reloads.
+    /// SetGameState() has a duplicate-guard so we force the state field first.
+    /// </summary>
+    public void ResetState()
+    {
+        ScoreManager.Instance.ResetScore();      // clear score before firing state events
+        GameState = GameState.GameOver;          // ensure it differs so the guard passes
+        SetGameState(GameState.Patrol);          // fires GameStateChanged(Patrol)
+        MusicManager.Instance.PlayPatrolMusic();
+    }
+
     void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        // todo handle WebGL
         Application.Quit();
 #endif
     }

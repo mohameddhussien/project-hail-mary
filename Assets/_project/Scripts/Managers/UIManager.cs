@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    
+
     [SerializeField] TargetIndicator _targetIndicatorPrefab;
     [SerializeField] Canvas _mainCanvas;
     [SerializeField] TMP_Text _scoreText, _highScoreText;
     [SerializeField] GameObject _gameOverScreen;
 
     List<TargetIndicator> _targetIndicators;
+
+    // -------------------------------------------------------------------------
+    // Unity lifecycle
+    // -------------------------------------------------------------------------
 
     void Awake()
     {
@@ -25,12 +30,23 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
         _targetIndicators = new List<TargetIndicator>();
+
+        // SceneManager.sceneLoaded fires after every scene load (including
+        // reloads) once all Awake() calls in the new scene have completed.
+        // That guarantees ScoreManager.Instance and GameManager.Instance are
+        // already set, so the null guards in Subscribe* never bail out early.
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnEnable()
     {
+        // Hide the game-over screen whenever this object is re-enabled.
+        if (_gameOverScreen != null)
+            _gameOverScreen.SetActive(false);
+
+        // Subscribe here for the very first scene (all singletons initialise
+        // in the same Awake pass, so Instance references are valid by OnEnable).
         SubscribeToEvents();
-        _gameOverScreen.SetActive(false);
     }
 
     void OnDisable()
@@ -38,10 +54,32 @@ public class UIManager : MonoBehaviour
         UnsubscribeFromEvents();
     }
 
-    void Start()
+    void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // -------------------------------------------------------------------------
+    // Scene reload
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Re-subscribes to all manager events after a scene reload.
+    /// Runs after every Awake() in the new scene, so singleton Instance
+    /// references are guaranteed to be populated.
+    /// Also performs a direct read of the current score/high-score so the UI
+    /// reflects the reset values immediately, without waiting for the next event.
+    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Unsubscribe first to avoid duplicate handlers from the previous scene.
+        UnsubscribeFromEvents();
         SubscribeToEvents();
     }
+
+    // -------------------------------------------------------------------------
+    // Public API
+    // -------------------------------------------------------------------------
 
     public void AddTarget(Transform target)
     {
@@ -65,16 +103,19 @@ public class UIManager : MonoBehaviour
     {
         foreach (var targetIndicator in _targetIndicators)
         {
-            targetIndicator.gameObject.SetActive(targets.Any(target => target.GetInstanceID() == targetIndicator.Key));
+            targetIndicator.gameObject.SetActive(targets.Any(t => t.GetInstanceID() == targetIndicator.Key));
             targetIndicator.LockedOn = targetIndicator.Key == lockedOnTarget;
         }
     }
+
+    // -------------------------------------------------------------------------
+    // Event subscription helpers
+    // -------------------------------------------------------------------------
 
     void SubscribeToEvents()
     {
         SubscribeToScoreManagerEvents();
         SubscribeToGameManagerEvents();
-
     }
 
     void UnsubscribeFromEvents()
@@ -86,35 +127,51 @@ public class UIManager : MonoBehaviour
     void SubscribeToScoreManagerEvents()
     {
         if (!ScoreManager.Instance) return;
+
+        // Always unsubscribe before subscribing to prevent duplicate handlers.
         UnsubscribeFromScoreManagerEvents();
         ScoreManager.Instance.ScoreChanged += OnScoreChanged;
         ScoreManager.Instance.HighScoreChanged += OnHighScoreChanged;
+
+        // Direct read: ScoreManager persists via DontDestroyOnLoad and has
+        // already reset its values by this point. Pulling the values now means
+        // the score display is correct immediately, not just on the next event.
+        OnScoreChanged(ScoreManager.Instance.Score);
+        OnHighScoreChanged(ScoreManager.Instance.HighScore);
     }
 
-    void UnsubscribeFromScoreManagerEvents()    
+    void UnsubscribeFromScoreManagerEvents()
     {
         if (!ScoreManager.Instance) return;
         ScoreManager.Instance.ScoreChanged -= OnScoreChanged;
-        ScoreManager.Instance.HighScoreChanged -= OnHighScoreChanged;    
+        ScoreManager.Instance.HighScoreChanged -= OnHighScoreChanged;
     }
 
-    private void SubscribeToGameManagerEvents()
+    void SubscribeToGameManagerEvents()
     {
+        if (!GameManager.Instance) return;
+        // Unsubscribe first to prevent duplicate handlers on reload.
+        UnsubscribeFromGameManagerEvents();
         GameManager.Instance.GameStateChanged += OnGameStateChanged;
     }
 
-
-    private void UnsubscribeFromGameManagerEvents()
+    void UnsubscribeFromGameManagerEvents()
     {
+        if (!GameManager.Instance) return;
         GameManager.Instance.GameStateChanged -= OnGameStateChanged;
     }
 
-    private void OnGameStateChanged(GameState state)
+    // -------------------------------------------------------------------------
+    // Event handlers
+    // -------------------------------------------------------------------------
+
+    void OnGameStateChanged(GameState state)
     {
-        if (state == GameState.GameOver)
-        {
-            _gameOverScreen.SetActive(true);
-        }
+        // Respond to every state so the screen is hidden when Patrol fires
+        // (e.g. after TryAgain). The original code only showed it and relied
+        // on OnEnable to hide it — but OnEnable never re-fires on a
+        // DontDestroyOnLoad object, so the overlay stayed visible after reload.
+        _gameOverScreen?.SetActive(state == GameState.GameOver);
     }
 
     void OnScoreChanged(int score)
