@@ -26,6 +26,7 @@ public class EnemyShipController : ShipController
     Transform _target;
 
     public UnityEvent<int> ShipDestroyed = new();
+    bool _destroyed;
 
     #region Public data for debugging
 
@@ -69,11 +70,13 @@ public class EnemyShipController : ShipController
 
     void OnDisable()
     {
-        ShipDestroyed.Invoke(GetInstanceID());
+        _destroyed = true;
+        ShipDestroyed.Invoke(gameObject.GetInstanceID());
     }
 
     public override void Update()
     {
+        if (_destroyed) return;
         EnemyShipState state = GetNextState();
         SetState(state);
         base.Update();
@@ -81,6 +84,7 @@ public class EnemyShipController : ShipController
 
     EnemyShipState GetNextState()
     {
+        if(_destroyed) return EnemyShipState.None;
         EnemyShipState newState = _state switch
         {
             EnemyShipState.Patrol => Patrol(),

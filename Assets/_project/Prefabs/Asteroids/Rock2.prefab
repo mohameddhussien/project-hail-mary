@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4861250339736637102}
   - component: {fileID: 7720897914922056591}
   - component: {fileID: 6896441651423804062}
-  - component: {fileID: 8371577410305687830}
   - component: {fileID: 2386822973304683118}
+  - component: {fileID: 8371577410305687830}
+  - component: {fileID: -5422381399901366991}
   m_Layer: 12
   m_Name: Rock2
   m_TagString: Untagged
@@ -115,20 +116,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5002652539513901180, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
---- !u!114 &8371577410305687830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6455322642897726912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 838fc90f7be5da94b9333c97aa4cdfad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 3DSpaceShooter::Asteroid
-  _fracturedAsteroidPrefab: {fileID: -1365630500868425095, guid: f677032a09c740c4f92e39d4252a7192, type: 3}
-  _explosionPrefab: {fileID: 11400000, guid: 4fb30eced14442c46af9f02bdd546b5d, type: 3}
 --- !u!54 &2386822973304683118
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -156,3 +143,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8371577410305687830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455322642897726912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838fc90f7be5da94b9333c97aa4cdfad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::Asteroid
+  _fracturedAsteroidPrefab: {fileID: -1365630500868425095, guid: f677032a09c740c4f92e39d4252a7192, type: 3}
+  _explosionPrefab: {fileID: 11400000, guid: f7c9f844656d9c548a04918b9fc5aa6d, type: 3}
+--- !u!114 &-5422381399901366991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455322642897726912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b6fcbf02621f64f9201bb723d00e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 3DSpaceShooter::AddPointsWhenDestroyed
+  _points: 20
