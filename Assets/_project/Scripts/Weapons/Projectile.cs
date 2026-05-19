@@ -59,13 +59,25 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log($"Projectile collided with ({collision.gameObject.name})");
+
         if (_impactSound) _audioSource.PlayOneShot(_impactSound);
-        if (collision.collider.gameObject.TryGetComponent<IDamageable>(out var damageable))
+
+        // GetComponentInParent walks UP the hierarchy until it finds IDamageable
+        var damageable = collision.collider.GetComponentInParent<IDamageable>();
+
+        if (damageable != null)
+        {
             damageable.TakeDamage(_damage, collision.GetContact(0).point);
+            Debug.Log($"Dealt {_damage} damage to {collision.gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning($"No IDamageable found on {collision.gameObject.name} or any parent");
+        }
 
         if (_hitEffect != null)
             Instantiate(_hitEffect, transform.position, Quaternion.identity);
-        
+
         Destroy(gameObject);
     }
 }

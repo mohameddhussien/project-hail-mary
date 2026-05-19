@@ -1,19 +1,23 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    
-    [SerializeField] TargetIndicator _targetIndicatorPrefab;
-    [SerializeField] Canvas _mainCanvas;
-    [SerializeField] TMP_Text _scoreText, _highScoreText;
-    [SerializeField] GameObject _gameOverScreen;
 
-    List<TargetIndicator> _targetIndicators;
+    [SerializeField] private TargetIndicator _targetIndicatorPrefab;
+    [SerializeField] private Canvas _mainCanvas;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _highScoreText;
+
+    private readonly List<TargetIndicator> _targetIndicators = new();
+
+    // -------------------------------------------------------------------------
+    // Unity lifecycle
+    // -------------------------------------------------------------------------
 
     void Awake()
     {
@@ -22,108 +26,104 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-        _targetIndicators = new List<TargetIndicator>();
-    }
-
-    void OnEnable()
-    {
-        SubscribeToEvents();
-        _gameOverScreen.SetActive(false);
-    }
-
-    void OnDisable()
-    {
-        UnsubscribeFromEvents();
     }
 
     void Start()
     {
+        
         SubscribeToEvents();
+        SyncScoreDisplay();
     }
+
+    void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+
+        if (Instance == this)
+            Instance = null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Public API — called by Targetable and RadarScreen
+    // -------------------------------------------------------------------------
 
     public void AddTarget(Transform target)
     {
-        var targetIndicator = Instantiate(_targetIndicatorPrefab, _mainCanvas.transform);
-        targetIndicator.Init(target, _mainCanvas);
-        _targetIndicators.Add(targetIndicator);
+        if (_targetIndicatorPrefab == null || _mainCanvas == null) return;
+
+        var indicator = Instantiate(_targetIndicatorPrefab, _mainCanvas.transform);
+        indicator.Init(target, _mainCanvas);
+        _targetIndicators.Add(indicator);
     }
 
     public void RemoveTarget(Transform target)
     {
-        var key = target.GetInstanceID();
+        int key = target.GetInstanceID();
         var indicator = _targetIndicators.FirstOrDefault(i => i.Key == key);
-        if (indicator)
-        {
-            _targetIndicators.Remove(indicator);
-            Destroy(indicator.gameObject);
-        }
+        if (indicator == null) return;
+
+        _targetIndicators.Remove(indicator);
+        Destroy(indicator.gameObject);
     }
 
     public void UpdateTargetIndicators(List<Transform> targets, int lockedOnTarget)
     {
-        foreach (var targetIndicator in _targetIndicators)
+        foreach (var indicator in _targetIndicators)
         {
-            targetIndicator.gameObject.SetActive(targets.Any(target => target.GetInstanceID() == targetIndicator.Key));
-            targetIndicator.LockedOn = targetIndicator.Key == lockedOnTarget;
+            indicator.gameObject.SetActive(
+                targets.Any(t => t.GetInstanceID() == indicator.Key));
+
+            indicator.LockedOn = indicator.Key == lockedOnTarget;
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Event wiring
+    // -------------------------------------------------------------------------
+
     void SubscribeToEvents()
     {
-        SubscribeToScoreManagerEvents();
-        SubscribeToGameManagerEvents();
+        if (ScoreManager.Instance == null)
+        {
+            Debug.LogWarning("[UIManager] ScoreManager.Instance is null on Subscribe.", this);
+            return;
+        }
 
-    }
-
-    void UnsubscribeFromEvents()
-    {
-        UnsubscribeFromScoreManagerEvents();
-        UnsubscribeFromGameManagerEvents();
-    }
-
-    void SubscribeToScoreManagerEvents()
-    {
-        if (!ScoreManager.Instance) return;
-        UnsubscribeFromScoreManagerEvents();
         ScoreManager.Instance.ScoreChanged += OnScoreChanged;
         ScoreManager.Instance.HighScoreChanged += OnHighScoreChanged;
     }
 
-    void UnsubscribeFromScoreManagerEvents()    
+    void UnsubscribeFromEvents()
     {
-        if (!ScoreManager.Instance) return;
+        if (ScoreManager.Instance == null) return;
+
         ScoreManager.Instance.ScoreChanged -= OnScoreChanged;
-        ScoreManager.Instance.HighScoreChanged -= OnHighScoreChanged;    
+        ScoreManager.Instance.HighScoreChanged -= OnHighScoreChanged;
     }
 
-    private void SubscribeToGameManagerEvents()
+    
+    void SyncScoreDisplay()
     {
-        GameManager.Instance.GameStateChanged += OnGameStateChanged;
+        if (ScoreManager.Instance == null) return;
+
+        OnScoreChanged(ScoreManager.Instance.Score);
+        OnHighScoreChanged(ScoreManager.Instance.HighScore);
     }
 
-
-    private void UnsubscribeFromGameManagerEvents()
-    {
-        GameManager.Instance.GameStateChanged -= OnGameStateChanged;
-    }
-
-    private void OnGameStateChanged(GameState state)
-    {
-        if (state == GameState.GameOver)
-        {
-            _gameOverScreen.SetActive(true);
-        }
-    }
+    // -------------------------------------------------------------------------
+    // Event handlers
+    // -------------------------------------------------------------------------
 
     void OnScoreChanged(int score)
     {
-        _scoreText.text = score.ToString();
+        if (_scoreText != null)
+            _scoreText.text = score.ToString();
     }
 
     void OnHighScoreChanged(int highScore)
     {
-        _highScoreText.text = highScore.ToString();
+        if (_highScoreText != null)
+            _highScoreText.text = highScore.ToString();
     }
 }
