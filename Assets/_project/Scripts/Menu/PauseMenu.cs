@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
     {
 
         Debug.Log("Update is running"); 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape pressed!");
             if (container.activeSelf)
@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
         container.SetActive(true);
         Time.timeScale = 0f;
 
-        Cursor.lockState = CursorLockMode.None;
+        
         Cursor.visible = true;
     }
 
@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour
         container.SetActive(false);
         Time.timeScale = 1f;
 
-        Cursor.lockState = CursorLockMode.Locked;
+       
         Cursor.visible = false;
     }
 
@@ -52,6 +52,7 @@ public class PauseMenu : MonoBehaviour
 
         container.SetActive(false);
         Time.timeScale = 1f;
+        GameManager.Instance?.ResetState();
         SceneManager.LoadScene("Game Menu");
     }
 

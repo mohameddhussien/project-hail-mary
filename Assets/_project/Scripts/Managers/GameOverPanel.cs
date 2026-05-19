@@ -2,15 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Attach to an ALWAYS-ACTIVE GameObject (e.g. the Canvas).
-/// NEVER attach to the GameOverPanel child itself.
-///
-/// Inspector:
-///   _damageHandler  → player's DamageHandler
-///   _gameOverPanel  → GameOverPanel child (Text + Button)
-///   _tryAgainButton → the Button inside GameOverPanel
-/// </summary>
+
 public class GameOverPanel : MonoBehaviour
 {
     [Header("References")]
@@ -18,8 +10,12 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private Button _tryAgainButton;
 
-    private bool _triggered = false;
+    private bool _triggered;
     private string _sceneName;
+
+    // -------------------------------------------------------------------------
+    // Unity lifecycle
+    // -------------------------------------------------------------------------
 
     private void Awake()
     {
@@ -48,7 +44,8 @@ public class GameOverPanel : MonoBehaviour
     private void Start()
     {
         _triggered = false;
-        _gameOverPanel.SetActive(false);
+        if (_gameOverPanel != null)
+            _gameOverPanel.SetActive(false);
     }
 
     private void OnDestroy()
@@ -61,46 +58,58 @@ public class GameOverPanel : MonoBehaviour
         _damageHandler.HealthChanged.RemoveListener(OnHealthChanged);
     }
 
+    // -------------------------------------------------------------------------
+    // Game-over trigger
+    // -------------------------------------------------------------------------
+
     private void TriggerGameOver()
     {
         if (_triggered) return;
         _triggered = true;
 
+        // Freeze game but keep UI animating.
         Time.timeScale = 0f;
+
+        // Show cursor so the player can click Try Again.
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        _gameOverPanel.SetActive(true);
+        if (_gameOverPanel != null)
+            _gameOverPanel.SetActive(true);
     }
 
     private void OnHealthChanged()
     {
         if (_triggered) return;
-        if (_damageHandler == null) return;
-        if (_damageHandler.MaxHealth <= 0) return;
+        if (_damageHandler == null || _damageHandler.MaxHealth <= 0) return;
 
         if (_damageHandler.Health <= 0)
             TriggerGameOver();
     }
 
+    // -------------------------------------------------------------------------
+    // Try Again
+    // -------------------------------------------------------------------------
+
     private void TryAgain()
     {
-        // ── Reset all DontDestroyOnLoad singletons ───────────────────
-        // Managers.cs keeps GameManager + ScoreManager alive across reloads.
-        // The fresh UIManager/HealthBarPlayer that spawn after LoadScene will
-        // read from these singletons immediately, so they must be clean first.
-        ScoreManager.Instance?.ResetScore();   // score → 0, fires ScoreChanged(0)
-        GameManager.Instance?.ResetState();    // state → Patrol, fires GameStateChanged(Patrol)
+        
+        GameManager.Instance?.ResetState();
 
-        // ── Reset own state ──────────────────────────────────────────
+        // ── Reset own state ─────────────────────────────────────────────────
         _triggered = false;
-        _gameOverPanel.SetActive(false);
+        if (_gameOverPanel != null)
+            _gameOverPanel.SetActive(false);
 
-        // ── Restore engine state ─────────────────────────────────────
+        // ── Restore engine state ────────────────────────────────────────────
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Confined; // matches GameManager.Start()
-        Cursor.visible = false;
+        //Cursor.visible = false;
 
+        // ── Reload scene ─────────────────────────────────────────────────────
+        // Everything in the Gameplay scene (UIManager, EnemyShipManager,
+        // HealthBarPlayer, GameOverPanel itself) is destroyed and recreated
+        // fresh. Singletons on Managers survive and already hold reset values.
         SceneManager.LoadScene(_sceneName);
     }
 }
